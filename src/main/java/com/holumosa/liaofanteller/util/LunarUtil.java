@@ -1,8 +1,11 @@
 package com.holumosa.liaofanteller.util;
 
+import com.holumosa.liaofanteller.core.model.FourPillar;
 import com.holumosa.liaofanteller.core.model.Lunar;
 import com.holumosa.liaofanteller.core.model.Solar;
 import java.util.Optional;
+
+import com.nlf.calendar.LunarTime;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.joda.time.Duration;
@@ -528,5 +531,28 @@ public final class LunarUtil {
     }
 
     return true;
+  }
+
+  public static FourPillar getFourPillar(int year, int month, int day, int hour, int minute) {
+    com.nlf.calendar.Lunar date = new com.nlf.calendar.Lunar(new com.nlf.calendar.Solar(year, month, day));
+
+    // 年
+    System.out.println(date.getYearInGanZhi());
+
+    // 月
+    System.out.println(date.getMonthInGanZhi());
+
+    // 日
+    System.out.println(date.getDayInGanZhi());
+
+    // 時
+    LunarTime lunarTime = new LunarTime(date.getYear(), date.getMonth(), date.getDay(), hour, minute, 0);
+
+    return new FourPillar(
+            date.getYearInGanZhi(),
+            date.getMonthInGanZhi(),
+            date.getDayInGanZhi(),
+            lunarTime.getGanZhi()
+    );
   }
 }

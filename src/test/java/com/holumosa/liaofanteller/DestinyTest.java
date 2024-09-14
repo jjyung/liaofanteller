@@ -12,11 +12,12 @@ class DestinyTest {
 
   @Test
   void testCore() {
-    Data.GroundTime byIndex = Data.GroundTime.getByHour(15);
-    System.out.println(byIndex.getDisplayName());
+    Data.GroundTime groundTime = Data.GroundTime.getByHour(15);
+    System.out.println(groundTime.getDisplayName());
+
 
     Config destinyConfig =
-        new Config(Config.ConfigType.SKY, Data.Sex.M, 1991, 6, 6, false, byIndex);
+        new Config(Config.ConfigType.SKY, Data.Sex.M, 1991, 6, 6, false, groundTime);
 
     Destiny destiny = new Destiny(destinyConfig);
 
@@ -28,7 +29,7 @@ class DestinyTest {
 
     Lunar lunar = LunarUtil.solar2Lunar(1991, 7, 17).orElseThrow();
 
-    Data.GroundTime byIndex = Data.GroundTime.getByHour(15);
+    Data.GroundTime groundTime = Data.GroundTime.getByHour(15);
 
     Assertions.assertEquals(6, lunar.getMonth());
     Assertions.assertEquals(6, lunar.getDay());
@@ -40,8 +41,8 @@ class DestinyTest {
             lunar.getYear(),
             lunar.getMonth(),
             lunar.getDay(),
-            false,
-            byIndex);
+            lunar.isLeap(),
+            groundTime);
 
     Destiny destiny = new Destiny(destinyConfig);
 
