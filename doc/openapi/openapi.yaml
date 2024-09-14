@@ -1,0 +1,392 @@
+openapi: 3.0.0
+x-stoplight:
+  id: poqtpn1kwgbxw
+info:
+  title: openapi
+  version: '1.0'
+  description: Liao Fang Teller APIs
+  contact:
+    name: Samson
+servers:
+  - url: 'http://localhost:3000'
+paths:
+  /api/v1/auth/login:
+    post:
+      summary: Login
+      operationId: post-api-v1-auth-login
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommonResponseDTO'
+              examples:
+                Example 1:
+                  value:
+                    code: '00000'
+                    message: ''
+      tags:
+        - Auth
+      description: Login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequestDTO'
+    parameters: []
+  /api/v1/auth/logout:
+    post:
+      summary: Logout
+      operationId: post-api-v1-auth-logout
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommonResponseDTO'
+              examples:
+                Example 1:
+                  value:
+                    code: '00000'
+                    message: ''
+      tags:
+        - Auth
+      description: Logout
+    parameters: []
+  /api/v1/chats/create:
+    post:
+      summary: Create a new chat
+      operationId: post-api-v1-chats-create
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatCreateResponseDTO'
+              examples:
+                Example 1:
+                  value:
+                    code: '00000'
+                    message: ''
+                    data:
+                      uuid: string
+                      message: string
+                      type: USER
+                      createdAt: 0
+      tags:
+        - Chat
+      description: Create a new chat
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChatCreateRequestDTO'
+            examples: {}
+    parameters: []
+  /apu/v1/chats/converse:
+    post:
+      summary: Converse in a chat
+      operationId: post-apu-v1-chats-converse
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChatConverseResponseDTO'
+              examples:
+                Example 1:
+                  value:
+                    code: '00000'
+                    message: ''
+                    data:
+                      uuid: string
+                      message: string
+                      type: USER
+                      createdAt: 0
+      description: Converse in a chat
+      tags:
+        - Chat
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChatConverseRequestDTO'
+    parameters: []
+  /api/v1/chats/list:
+    post:
+      summary: List all chats
+      operationId: post-api-v1-chats-list
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/CommonResponseDTO'
+                  - type: object
+                    x-stoplight:
+                      id: ry5v59lp17f3q
+                    properties:
+                      data:
+                        type: array
+                        x-stoplight:
+                          id: btyjxesyx71e7
+                        items:
+                          $ref: '#/components/schemas/ChatDTO'
+              examples:
+                Example 1:
+                  value:
+                    code: '00000'
+                    message: ''
+                    data:
+                      - uuid: string
+                        name: string
+      description: List all chats
+      tags:
+        - Chat
+  /api/v1/messages/list:
+    post:
+      summary: List messages by chat
+      operationId: post-api-v1-messages-list
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MessageListResponseDTO'
+              examples:
+                Example 1:
+                  value:
+                    code: '00000'
+                    message: ''
+                    data:
+                      - uuid: string
+                        message: string
+                        type: USER
+                        createdAt: 0
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MessageListRequestDTO'
+            examples: {}
+      tags:
+        - Message
+      description: List messages by chat
+components:
+  schemas:
+    CommonResponseDTO:
+      title: CommonResponseDTO
+      x-stoplight:
+        id: 3l3z4ol3u4erc
+      type: object
+      properties:
+        code:
+          type: string
+          x-stoplight:
+            id: 0pw3k6xuzid6a
+        message:
+          type: string
+          x-stoplight:
+            id: ub9aayjik5s5e
+    LoginRequestDTO:
+      title: LoginReqDTO
+      x-stoplight:
+        id: 6cd5zkz9zdhs0
+      type: object
+      properties:
+        username:
+          type: string
+          x-stoplight:
+            id: ubdpnb79j2vrc
+          minLength: 1
+        passwd:
+          type: string
+          x-stoplight:
+            id: 17kmswnpm2glp
+          minLength: 1
+      required:
+        - username
+        - passwd
+    ChatCreateRequestDTO:
+      title: ChatCreateRequestDTO
+      x-stoplight:
+        id: 8ih3lo1z7ryub
+      type: object
+      properties:
+        year:
+          type: integer
+          x-stoplight:
+            id: 8zq0kzxmjuki4
+          maximum: 2099
+          minimum: 1
+        month:
+          type: integer
+          x-stoplight:
+            id: 3926lh62zxmv1
+          minimum: 1
+          maximum: 12
+        day:
+          type: integer
+          x-stoplight:
+            id: 0luse64peo8ik
+          minimum: 1
+          maximum: 31
+        hour:
+          type: integer
+          x-stoplight:
+            id: 09er6gzg0g7dj
+          minimum: 0
+          maximum: 24
+        minute:
+          type: integer
+          x-stoplight:
+            id: 2oe111x8wc07a
+          minimum: 0
+          maximum: 59
+        gender:
+          $ref: '#/components/schemas/GenderEnum'
+      required:
+        - year
+        - month
+        - day
+        - hour
+        - gender
+    GenderEnum:
+      title: GenderEnum
+      x-stoplight:
+        id: yw5j579mkxxks
+      type: string
+      enum:
+        - M
+        - F
+    MessageTypeEnum:
+      title: MessageTypeEnum
+      x-stoplight:
+        id: y5yrxcv98dcnu
+      type: string
+      enum:
+        - USER
+        - ASSISTANT
+    ChatConverseRequestDTO:
+      title: ChatConverseRequestDTO
+      x-stoplight:
+        id: t88ww4u47iyst
+      type: object
+      properties:
+        chatUuid:
+          type: string
+          x-stoplight:
+            id: xo8v6472doc95
+        userMessage:
+          type: string
+          x-stoplight:
+            id: j0ygtzk2izrrj
+    ChatConverseResponseDTO:
+      title: ChatConverseResponseDTO
+      x-stoplight:
+        id: eie6g3jbakp13
+      allOf:
+        - $ref: '#/components/schemas/CommonResponseDTO'
+        - type: object
+          x-stoplight:
+            id: hoozebev140d4
+          properties:
+            data:
+              $ref: '#/components/schemas/ChatMessageDTO'
+    ChatMessageDTO:
+      title: ChatMessageDTO
+      x-stoplight:
+        id: wn3e3v8xms9n1
+      type: object
+      properties:
+        uuid:
+          type: string
+          x-stoplight:
+            id: w4oxn4mix1mkp
+        message:
+          type: string
+          x-stoplight:
+            id: 0yyecrhxyqp9m
+        type:
+          $ref: '#/components/schemas/MessageTypeEnum'
+        createdAt:
+          type: integer
+          x-stoplight:
+            id: ty6r5lycp8mxg
+          format: int64
+    ChatCreateResponseDTO:
+      title: ChatCreateResponseDTO
+      x-stoplight:
+        id: nos205f62tky4
+      allOf:
+        - $ref: '#/components/schemas/CommonResponseDTO'
+        - type: object
+          x-stoplight:
+            id: opqx9y9t56389
+          properties:
+            data:
+              $ref: '#/components/schemas/ChatMessageDTO'
+    ChatDTO:
+      title: ChatDTO
+      x-stoplight:
+        id: lrb9lo7ajk0jk
+      type: object
+      properties:
+        uuid:
+          type: string
+          x-stoplight:
+            id: xng2jc9tm67m0
+        name:
+          type: string
+          x-stoplight:
+            id: 7ae9cstbt1z4h
+    MessageListRequestDTO:
+      title: MessageListRequestDTO
+      x-stoplight:
+        id: 8lhi2ky50ij1o
+      type: object
+      properties:
+        chatUuid:
+          type: string
+          x-stoplight:
+            id: wllb33z8q5jcg
+        size:
+          type: integer
+          x-stoplight:
+            id: c60i1x7guvflv
+          maximum: 10
+          minimum: 1
+        fromMessageUuid:
+          type: string
+          x-stoplight:
+            id: 4ylxcvwdgory8
+      required:
+        - chatUuid
+        - size
+    MessageListResponseDTO:
+      title: MessageListResponseDTO
+      x-stoplight:
+        id: e2ekckskasoj4
+      allOf:
+        - $ref: '#/components/schemas/CommonResponseDTO'
+        - type: object
+          x-stoplight:
+            id: 6talbufh5183n
+          properties:
+            data:
+              type: array
+              x-stoplight:
+                id: l8s4g3jp55h2f
+              items:
+                $ref: '#/components/schemas/ChatMessageDTO'
+tags:
+  - name: Auth
+  - name: Chat
+  - name: Message
